@@ -1,5 +1,6 @@
 package com.experience.mytools.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class TestController {
+    @Value("${test.hello:TEST}")
+    private String testHello;
+
     @PostMapping("/hello")
     public String hello(){
-        return "hello word!";
+        return testHello;
     }
 
     @PostMapping("/hello/post")
