@@ -13,11 +13,10 @@ import com.experience.mytools.domain.EbookExample;
 import com.experience.mytools.mapper.EbookMapper;
 import com.experience.mytools.req.EbookReq;
 import com.experience.mytools.resp.EbookResp;
-import org.springframework.beans.BeanUtils;
+import com.experience.mytools.utils.CopyUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,12 +29,7 @@ public class EbookService {
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         criteria.andNameLike("%"+req.getName()+"%");
         List<Ebook> ebookList = ebookMapper.selectByExample(ebookExample);
-        ArrayList<EbookResp> resp = new ArrayList<>();
-        for (Ebook ebook : ebookList) {
-            EbookResp ebookResp = new EbookResp();
-            BeanUtils.copyProperties(ebook,ebookResp);
-            resp.add(ebookResp);
-        }
+        List<EbookResp> resp = CopyUtil.copyList(ebookList, EbookResp.class);
         return resp;
     }
 }
